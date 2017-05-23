@@ -8,15 +8,45 @@
   <meta name="author" content="">
 
     <title>LitterFall</title>
+    <style type="text/css">
+    .admin{
+      float:left; 
+      width: 40%;
+      height:20%;
+    }
 
+    .user{
+      float:left; 
+      margin-left: 15%;
+      width: 40%;
+      height:20%;
+    }
+
+    #inputLabel {
+      overflow: hidden;
+      max-height: 40px;
+      background-image: linear-gradient(to bottom,#337ab7 0,#265a88 100%); 
+      padding: 10px 10px 10px 10px;
+      color: white;
+    }
+
+    #inputLabel > input {
+      position: fixed;
+      top: -1000px;
+    }
+
+     #map {
+        height: 50%;
+        width: 90%;
+        margin-left: 5%; 
+    }
+  </style>
     <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
   <!-- Optional theme -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
-  <link rel="stylesheet" href="overrides.css">
-    </head>
 <body>
 
 <nav class="navbar navbar-inverse navbar-static-top">
@@ -40,37 +70,67 @@
       </div><!--/.nav-collapse -->
     </div>
  </nav>
-  
-  <div class="container" id="welcomeSugar">
-    <center> <h2 id="sugarValue">Loading... </h2> <br>
-	
-	<div id="chart_div"></div>
-	
-	</center>
-	
-	
-  </div>
-  
-  
  
-  
-  
-   <script type="text/javascript"        
-  src="https://www.gstatic.com/charts/loader.js"></script>
- <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
 
-<script src="https://www.gstatic.com/firebasejs/3.6.4/firebase.js"></script>
+  <div style="text-align: right;margin-right: 5%;">
+  <h1>LitterFall</h1>
+  <span>Let the litter out easily</span>
+</div>
+
+<div style="width: 80%; margin-left: 10%; align-content: center; margin-bottom: 5%;">
+    <h1>You can view your default SmartBin</h1>
+    <br>
+    <span>Bin#: @</span>
+    <br>
+    <span>Adress: @</span>    
+    <br>
+    <br>
+    <span>You can change your default SmartBin just associated your device with Bin you liked^^</span>
+    <br>
+  
+</div>
+
+
+<div id="map"></div>
+
+
+
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="js/index.js"></script>
 <script>
-  // Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyBDGes7hnWYAy5fnqTubJmAvBl9L9rRXGU",
-    authDomain: "bedboy-170d5.firebaseapp.com",
-    databaseURL: "https://bedboy-170d5.firebaseio.com",
-    storageBucket: "bedboy-170d5.appspot.com",
-    messagingSenderId: "185907386327"
-  };
-  firebase.initializeApp(config);
-</script>
+      function initMap() {
+    
+        var uluru = {lat: +50.0077345, lng: 36.2279562};
+    
+    
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 10,
+          center: uluru  
+        });
+    
+        var marker = new google.maps.Marker({
+          position: uluru,
+          map: map,
+        icon: 'img/pin.png', 
+        });
+    
+    map.addListener('center_changed', function() {
+        // 3 seconds after the center of the map has changed, pan back to the
+        // marker.
+      window.setTimeout(function() {
+        map.panTo(marker.getPosition());
+      }, 3000);
+    });
+
+    marker.addListener('click', function() {
+      map.setZoom(8);
+      map.setCenter(marker.getPosition());
+      });
+      }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC1GvVJaWSRf1TPXCIGUzX9ihL0um3ORhQ&callback=initMap"></script>
 
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
